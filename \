@@ -1,0 +1,90 @@
+#include <iostream>
+#include<stdio.h>
+#include <algorithm>
+#include <vector>
+#include <cstring>
+#include <fstream>
+using namespace std;
+#define PC 1
+char seq[33] = {'0'};
+
+int findmatch(char*pat, int patlen)
+{
+    int curr = 0;
+    int len = 32;
+    char *s = seq;
+    int nextIndex = 0;
+    int nextCurr = 0;
+    for(int i=0;i<len;i++)
+    {
+        while(s[i+curr] == pat[curr] && curr < patlen)
+        {
+            curr++;
+            if(nextIndex)
+            {
+                if(s[nextIndex+nextCurr] == pat[curr] && )
+                {
+                    nextCurr++;
+                } 
+            } else {
+                if(s[i+curr] == pat[0])
+                    nextIndex = i+curr;
+            }
+        } 
+        if(patlen == curr)
+            return i;
+        else
+        {
+            i = curr;
+            curr = 0;
+        }
+    }
+    return -1;
+}
+
+int main()
+{
+#ifdef PC
+    freopen("ipseq","r",stdin);
+#endif
+    int testcase, len, tem;
+    char vec[100000] = {'0'};
+    int temp;
+    bool curr;
+    scanf("%d", &testcase);
+    printf("\n\n\n");
+    for(int i=0;i<32;i++)
+    {
+        if(i)
+        {
+            curr = false;
+            temp = i;
+            while(temp)
+            {
+                curr = curr xor temp%2;
+                temp/=2;
+            }
+        }
+        if(curr)
+            seq[i] = '1';
+        else
+            seq[i] = '0';
+    }
+    seq[32] = '\0';
+    for(int i=0;i<testcase;i++)
+    {
+        scanf("%d", &len);
+        memset(vec, '0', sizeof(char) * len);
+        for(int j=0;j<len;j++)
+        {
+            scanf("%d", &tem);
+            if(tem)
+                vec[j] = '1';
+        }
+        for(int k=1;k<=len;k++)
+        {
+            printf("%d ", findmatch(vec, k));
+        }
+    }
+    return 0;
+}
