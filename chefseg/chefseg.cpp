@@ -45,17 +45,26 @@ int main()
     unsigned int X;
     unsigned long K;
     unsigned int left = 0;
-    unsigned int level;
+    unsigned int level=0;
     unsigned long position;
-	scanf("%d", &testcase);
-	while(testcase--)
-	{
+    double result;
+    scanf("%d", &testcase);
+    while(testcase--)
+    {
         cin>>X;
         K = scanl();
         cout<<X<<' '<<K<<'\t'; 
-        level = (log(K)/log(2));
+        int i =0;
+        while(i<sizeof(K)*8)
+        {
+            if(K>>i)
+                level = i;
+            i++;
+        }
         position = K - pow(2,level);
-        cout<<level<<'\t'<<position<<endl;
-	}
+        result = pow(2.0, -1.0*(level+1)) + position * pow(2.0, -1.0*(level));
+        result *= X;
+        printf("%.4f\n", result);
+    }
     return 0;
 }
